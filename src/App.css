@@ -1,0 +1,361 @@
+@font-face {
+  font-family: "RaceSport";
+  src: url("/RaceSport.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+body,
+p,
+span,
+a,
+li,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.btn,
+.navbar {
+  color: var(--racing-green) !important;
+  font-family: "RaceSport", sans-serif !important;
+}
+
+/* Eccezione per i bottoni con testo scuro (es. quelli con sfondo verde pieno) */
+.btn-warning,
+.btn-outline-warning:hover,
+.btn-outline-warning:focus,
+.btn-outline-warning:active {
+  color: #000 !important;
+}
+
+@media (max-width: 576px) {
+  body {
+    font-size: 1.5em;
+  }
+}
+
+/* HOVER BARRA DI RICERCA */
+.search-clear-btn {
+  transition: all 0.2s ease;
+}
+
+.search-clear-btn:hover {
+  transform: translateY(-50%) scale(1.2) rotate(90deg);
+  color: #ff0000 !important;
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
+}
+
+/* ========================================
+   COLORE PRINCIPALE DEL SITO 
+   ======================================== */
+
+:root {
+  --racing-green: #00c853 !important ;
+  --racing-green-dark: #00a844 !important;
+}
+
+.text-warning,
+.badge,
+.tag,
+[class*="badge-"],
+[class*="bg-warning"],
+[class*="text-warning"] {
+  color: #000 !important;
+}
+
+/* Sfondi che erano gialli */
+.bg-warning,
+.badge,
+.tag,
+[class*="badge-warning"],
+[class*="bg-warning"] {
+  background-color: var(--racing-green) !important;
+  border-color: var(--racing-green) !important;
+}
+
+/* Bordi gialli → verdi */
+.border-warning,
+[class*="border-warning"] {
+  border-color: var(--racing-green) !important;
+}
+
+/* Bottoni gialli → verdi */
+.btn-warning {
+  background-color: var(--racing-green) !important;
+  border-color: var(--racing-green) !important;
+}
+
+/* Hover bottoni */
+.btn-warning:hover {
+  background-color: var(--racing-green-dark) !important;
+  border-color: var(--racing-green-dark) !important;
+}
+
+/* Bottoni outline gialli → verdi */
+.btn-outline-warning {
+  color: var(--racing-green) !important;
+  border-color: var(--racing-green) !important;
+}
+
+.btn-outline-warning:hover,
+.btn-outline-warning:focus,
+.btn-outline-warning:active {
+  background-color: var(--racing-green) !important;
+  border-color: var(--racing-green) !important;
+  color: #000 !important;
+}
+/* ========================================
+   EFFETTO VETRINA RACING / SUPERCAR
+   ======================================== */
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  cursor: pointer;
+}
+
+/* Effetto Zoom pulito sull'immagine interna alla card */
+.card img {
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+}
+
+/* Stato al passaggio del mouse (Hover Vetrina) */
+.card:hover {
+  transform: translateY(-10px) !important;
+  border-color: var(--racing-green) !important;
+  /* Doppia ombra: una diffusa scura e una verde fluo stile neon */
+  box-shadow:
+    0 20px 30px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(0, 200, 83, 0.4) !important;
+}
+
+/* Quando la card è in hover, l'immagine fa un zoom in avanti elegante */
+.card:hover img {
+  transform: scale(1.08) !important;
+}
+
+/* Effetto clic immediato (pressione del bolide) */
+.card:active {
+  transform: translateY(-3px) scale(0.99) !important;
+  box-shadow:
+    0 10px 15px rgba(0, 0, 0, 0.4),
+    0 0 8px rgba(0, 200, 83, 0.3) !important;
+}
+
+footer {
+  font-size: 0.7em;
+}
+
+.LogoCogna {
+  width: 8em;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Cambia il bordo del bottone hamburger quando collassa */
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 200, 83, 0.25) !important;
+}
+
+.contact-form-card:hover {
+  transform: none !important;
+
+  box-shadow: none !important;
+}
+
+/* ========================================
+   BADGE STATUS - VERDE RACING
+   ======================================== */
+
+.badge {
+  background-color: #00c853 !important;
+  color: #000000 !important;
+  border-color: #00c853 !important;
+}
+
+.badge.bg-primary,
+.badge.bg-info,
+.badge.bg-secondary,
+.badge.bg-success,
+.badge.bg-warning,
+.badge.bg-danger {
+  background-color: #00c853 !important;
+  color: #000000 !important;
+  border-color: #00c853 !important;
+}
+
+.pills-small {
+  font-size: 0.6em !important;
+}
+
+/* ========================================
+   TABELLA BACKOFFICE PIERO CAR
+   ======================================== */
+
+.backoffice-table {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border-color: rgba(0, 200, 83, 0.15) !important;
+}
+
+/* Celle */
+
+.backoffice-table tbody td {
+  background: #050505 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: all 0.25s ease;
+}
+
+/* Hover riga */
+
+.backoffice-table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.backoffice-table tbody tr:hover td {
+  background: rgba(0, 200, 83, 0.055) !important;
+  border-bottom-color: rgba(0, 200, 83, 0.25) !important;
+}
+
+/* Immagine */
+
+.backoffice-table tbody img {
+  transition: all 0.3s ease;
+}
+
+.backoffice-table tbody tr:hover img {
+  transform: scale(1.05);
+  border-color: #00c853 !important;
+  box-shadow: 0 0 14px rgba(0, 200, 83, 0.25);
+}
+
+/* Marca e modello */
+
+.backoffice-table .fw-bold {
+  transition: text-shadow 0.25s ease;
+}
+
+.backoffice-table tbody tr:hover .fw-bold {
+  text-shadow: 0 0 8px rgba(0, 200, 83, 0.35);
+}
+
+/* Badge categoria */
+
+.backoffice-table .badge {
+  transition: all 0.25s ease;
+}
+
+.backoffice-table tbody tr:hover .badge {
+  border-color: rgba(0, 200, 83, 0.75) !important;
+}
+
+/* Pulsante modifica */
+
+.backoffice-table .btn-dark {
+  transition: all 0.2s ease;
+}
+
+.backoffice-table .btn-dark:hover {
+  background: #00c853 !important;
+  color: #000 !important;
+  border-color: #00c853 !important;
+  box-shadow: 0 0 12px rgba(0, 200, 83, 0.35);
+}
+
+/* Pulsante elimina */
+
+.backoffice-table .btn-outline-danger {
+  transition: all 0.2s ease;
+}
+
+.backoffice-table .btn-outline-danger:hover {
+  box-shadow: 0 0 12px rgba(220, 53, 69, 0.35);
+}
+
+/* INTESTAZIONE TABELLA BACKOFFICE */
+.backoffice-table thead th {
+  background-color: #000000 !important;
+  color: #00c853 !important;
+  border-bottom: 1px solid rgba(0, 200, 83, 0.35) !important;
+}
+.backoffice-table thead tr {
+  background-color: #000000 !important;
+}
+.special-p {
+  color: white !important;
+}
+.button-s {
+  color: #00c853c3 !important ;
+  background-color: #00c853c3 !important;
+}
+
+/* PUSLAZIONE VERDE */
+
+.pulse-green-button {
+  animation: pulseGreen 1.35s ease-in-out infinite;
+}
+@keyframes pulseGreen {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 rgba(0, 200, 83, 0),
+      0 0 0 rgba(0, 200, 83, 0);
+  }
+  50% {
+    transform: scale(1.025);
+    box-shadow:
+      0 0 12px rgba(0, 200, 83, 0.3),
+      0 0 28px rgba(0, 200, 83, 0.15);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 rgba(0, 200, 83, 0),
+      0 0 0 rgba(0, 200, 83, 0);
+  }
+}
+
+/* SWITCH PAGINA MORBIDo */
+.page-transition {
+  animation: pageSlide 0.75s ease-out;
+}
+@keyframes pageSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* CARICAMENTO SEQUENZIALE HOME */
+
+.page-load-item {
+  opacity: 0;
+  transform: translateY(45px);
+  animation: pageLoadUp 0.8s ease-out forwards;
+}
+@keyframes pageLoadUp {
+  0% {
+    opacity: 0;
+    transform: translateY(45px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
