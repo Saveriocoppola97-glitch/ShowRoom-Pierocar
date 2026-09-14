@@ -1154,7 +1154,7 @@ export default function Contatti() {
                 <Col xs={6}>
                   {" "}
                   <div
-                    className="bg-black border border-secondary p-4 h-100 text-center"
+                    className="bg-black border border-secondary p-4 px-3 h-100 text-center"
                     style={{ minHeight: "150px" }}
                   >
                     {" "}
@@ -1167,7 +1167,7 @@ export default function Contatti() {
                     </div>{" "}
                     <div className="text-uppercase fw-bold mt-2">
                       {" "}
-                      Professionalità{" "}
+                      Professione
                     </div>{" "}
                     <small className="text-secondary">
                       {" "}
