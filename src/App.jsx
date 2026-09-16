@@ -289,6 +289,20 @@ export default function App() {
     }
   };
 
+  const formatDescription = (description) => {
+    if (!description) {
+      return [];
+    }
+    return description
+      .split(/\n\s*\n/)
+      .map(function (paragraph) {
+        return paragraph.trim();
+      })
+      .filter(function (paragraph) {
+        return paragraph.length > 0;
+      });
+  };
+
   // Modifica URL immagine principale
   const handleMainImageChange = (e) => {
     setFormData({
@@ -560,10 +574,8 @@ export default function App() {
           boxShadow: "0 4px 25px rgba(0,0,0,0.45)",
         }}
       >
-        {" "}
         <Container fluid>
-          {" "}
-          {/* LOGO */}{" "}
+          {/* LOGO */}
           <Navbar.Brand
             as={Link}
             to="/"
@@ -579,13 +591,11 @@ export default function App() {
               e.currentTarget.style.filter = "none";
             }}
           >
-            {" "}
             <span className="fs-4 tracking-wider text-uppercase font-monospace">
-              {" "}
-              <img className="LogoCogna" src={LogoCogna} alt="Logo" />{" "}
-            </span>{" "}
-          </Navbar.Brand>{" "}
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />{" "}
+              <img className="LogoCogna" src={LogoCogna} alt="Logo" />
+            </span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
             id="basic-navbar-nav"
             className="justify-content-end"
@@ -627,9 +637,9 @@ export default function App() {
                     opacity: location.pathname === "/" ? 1 : 0,
                     transition: "all 0.3s ease",
                   }}
-                />{" "}
-              </Nav.Link>{" "}
-              {/* CONTATTI */}{" "}
+                />
+              </Nav.Link>
+              {/* CONTATTI */}
               <Nav.Link
                 as={Link}
                 to="/contatti"
@@ -700,11 +710,10 @@ export default function App() {
                   }}
                 />
               </Nav.Link>
-              {/* ADMIN LOGGATO */}{" "}
+              {/* ADMIN LOGGATO */}
               {isAdminLoggedIn && (
                 <>
-                  {" "}
-                  {/* BACKOFFICE */}{" "}
+                  {/* BACKOFFICE */}
                   <Nav.Link
                     as={NavLink}
                     to="/backoffice"
@@ -727,8 +736,7 @@ export default function App() {
                       e.currentTarget.style.transform = "translateY(0)";
                     }}
                   >
-                    {" "}
-                    Backoffice{" "}
+                    Backoffice
                     <span
                       style={{
                         position: "absolute",
@@ -741,9 +749,9 @@ export default function App() {
                         opacity: location.pathname === "/backoffice" ? 1 : 0,
                         transition: "all 0.3s ease",
                       }}
-                    />{" "}
-                  </Nav.Link>{" "}
-                  {/* ESCI ADMIN */}{" "}
+                    />
+                  </Nav.Link>
+                  {/* ESCI ADMIN */}
                   <Button
                     variant="outline-danger"
                     size="sm"
@@ -760,14 +768,13 @@ export default function App() {
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    {" "}
                     <LogOut size={16} />
-                  </Button>{" "}
+                  </Button>
                 </>
               )}
-            </Nav>{" "}
-          </Navbar.Collapse>{" "}
-        </Container>{" "}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
       </Navbar>
       {/* CONTENUTO PRINCIPALE */}
       <main
@@ -1617,9 +1624,8 @@ export default function App() {
                 }}
               >
                 <div style={{ color: "#00c853" }}>
-                  <strong>Sede:</strong>{" "}
+                  <strong>Sede:</strong>
                   <span className="text-white">
-                    {" "}
                     Via Val Demone 65A, 91026 Mazara del Vallo (TP)
                   </span>
                 </div>
@@ -1655,14 +1661,34 @@ export default function App() {
             <Col xs={12} md={7}>
               <div
                 className="small"
-                style={{
-                  color: "#00c853",
-                  lineHeight: "1.7",
-                }}
+                style={{ color: "#00c853", lineHeight: "1.7" }}
               >
                 © {new Date().getFullYear()} PieroCar Showroom. Tutti i diritti
-                riservati.
-                <br />
+                riservati. <br />
+                <span style={{ color: "#777777", fontSize: "0.55rem" }}>
+                  Sito web realizzato da
+                  <a
+                    href="https://wa.me/393456101086?text=Ciao%20Saverio%2C%20ho%20visto%20il%20sito%20PieroCar%20e%20vorrei%20avere%20maggiori%20informazioni."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "#00c853",
+                      textDecoration: "none",
+                      fontWeight: "600",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.textShadow =
+                        "0 0 8px rgba(0, 200, 83, 0.5)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.textShadow = "none";
+                    }}
+                  >
+                    -Saverio
+                  </a>
+                  -Web Developer
+                </span>
               </div>
             </Col>
             <Col xs={12} md={5}>
@@ -1905,7 +1931,31 @@ export default function App() {
             <h5 className="text-uppercase fw-bold text-succes mb-2">
               Panoramica
             </h5>
-            <p className="text-white mb-4">{selectedCar.description}</p>
+            <div className="text-white mb-4">
+              {formatDescription(selectedCar.description).map(
+                function (paragraph, index) {
+                  var isUppercase =
+                    paragraph === paragraph.toUpperCase() &&
+                    paragraph !== paragraph.toLowerCase();
+
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        fontSize: isUppercase ? "0.95rem" : "0.7rem",
+                        lineHeight: "2.1",
+                        marginBottom: "1.2rem",
+                        whiteSpace: "pre-line",
+                        textTransform: "none",
+                        fontWeight: isUppercase ? "bold" : "normal",
+                      }}
+                    >
+                      {paragraph}
+                    </div>
+                  );
+                },
+              )}
+            </div>
           </Modal.Body>
 
           <Modal.Footer className="border-0">
@@ -2257,9 +2307,9 @@ export default function App() {
                 <div className="bg-black border border-secondary rounded p-3">
                   <Form.Label className="text-warning small text-uppercase fw-bold">
                     Galleria Immagini
-                  </Form.Label>{" "}
+                  </Form.Label>
                   <Form.Text className="d-block mb-3 text-light">
-                    Carica un'immagine dal PC.{" "}
+                    Carica un'immagine dal PC.
                   </Form.Text>
                   {formData.gallery.map((image, index) => (
                     <div
@@ -2271,14 +2321,11 @@ export default function App() {
                           Immagine {index + 1}
                         </span>
                         <div className="d-flex align-items-center gap-2">
-                          {" "}
                           {image && (
                             <>
-                              {" "}
                               <Badge bg="success" className="text-uppercase">
-                                {" "}
-                                Caricata{" "}
-                              </Badge>{" "}
+                                Caricata
+                              </Badge>
                               <Button
                                 type="button"
                                 variant="outline-danger"
@@ -2286,20 +2333,17 @@ export default function App() {
                                 onClick={() => handleDeleteGalleryImage(index)}
                                 title={`Elimina immagine ${index + 1}`}
                               >
-                                {" "}
-                                <Trash2 size={16} />{" "}
-                              </Button>{" "}
+                                <Trash2 size={16} />
+                              </Button>
                             </>
-                          )}{" "}
-                        </div>{" "}
-                      </div>{" "}
-                      {/* FILE */}{" "}
+                          )}
+                        </div>
+                      </div>
+                      {/* FILE */}
                       <Form.Group>
-                        {" "}
                         <Form.Label className="text-light small">
-                          {" "}
-                          Carica dal PC{" "}
-                        </Form.Label>{" "}
+                          Carica dal PC
+                        </Form.Label>
                         <Form.Control
                           type="file"
                           accept="image/jpeg,image/png,image/webp"
@@ -2307,16 +2351,14 @@ export default function App() {
                             handleImageUpload(e, "gallery", index)
                           }
                           className="bg-dark text-light border-secondary"
-                        />{" "}
-                      </Form.Group>{" "}
-                      {/* ANTEPRIMA */}{" "}
+                        />
+                      </Form.Group>
+                      {/* ANTEPRIMA */}
                       {image && (
                         <div className="mt-3">
-                          {" "}
                           <small className="text-light d-block mb-2">
-                            {" "}
-                            Anteprima:{" "}
-                          </small>{" "}
+                            Anteprima:
+                          </small>
                           <img
                             src={image}
                             alt={`Anteprima ${index + 1}`}
@@ -2326,34 +2368,41 @@ export default function App() {
                               height: "85px",
                               objectFit: "cover",
                             }}
-                          />{" "}
+                          />
                         </div>
-                      )}{" "}
+                      )}
                     </div>
-                  ))}{" "}
-                </div>{" "}
+                  ))}
+                </div>
               </Col>
               {/* DESCRIZIONE */}
               <Col md={12}>
                 <Form.Group>
-                  <Form.Label className="text-light small text-uppercase fw-semibold">
-                    Descrizione
-                  </Form.Label>
-
+                  {" "}
+                  <Form.Label className="text-secondary small text-uppercase fw-semibold">
+                    {" "}
+                    Descrizione{" "}
+                  </Form.Label>{" "}
                   <Form.Control
                     as="textarea"
-                    rows={3}
-                    required
+                    rows={10}
                     placeholder="Descrivi la vettura..."
                     value={formData.description}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        description: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      setFormData({ ...formData, description: e.target.value });
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const text = e.clipboardData.getData("text/plain");
+                      setFormData({ ...formData, description: text });
+                    }}
                     className="bg-black text-light border-secondary"
-                  />
+                    style={{
+                      resize: "vertical",
+                      lineHeight: "1.7",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  />{" "}
                 </Form.Group>
               </Col>
             </Row>

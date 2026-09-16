@@ -31,7 +31,6 @@ export default function Contatti() {
     nome: "",
     email: "",
     telefono: "",
-    vettura: "",
     messaggio: "",
   });
 
@@ -43,19 +42,45 @@ export default function Contatti() {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setSent(true);
-
-    setFormData({
-      nome: "",
-      email: "",
-      telefono: "",
-      vettura: "",
-      messaggio: "",
-    });
+    console.log("Invio modulo...");
+    const dati = {
+      access_key: "bb975f1d-515f-4023-9376-140fb3d450a5",
+      name: formData.nome,
+      email: formData.email,
+      telefono: formData.telefono,
+      message: formData.messaggio,
+      replyto: formData.email,
+      subject: "Nuova richiesta dal PieroCar.it",
+    };
+    console.log("Dati inviati:", dati);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(dati),
+      });
+      const data = await response.json();
+      console.log("Risposta Web3Forms:", data);
+      if (!data.success) {
+        console.error("Errore Web3Forms:", data);
+        return;
+      }
+      console.log("Email inviata correttamente!");
+      setSent(true);
+      setFormData({
+        nome: "",
+        email: "",
+        telefono: "",
+        messaggio: "",
+      });
+    } catch (error) {
+      console.error("Errore durante l'invio:", error);
+    }
   };
 
   return (
@@ -142,7 +167,6 @@ export default function Contatti() {
 
               {/* ICONE SOCIAL */}
               <div className="d-flex align-items-center gap-3 mb-4">
-                {" "}
                 <span
                   className="text-uppercase fw-semibold"
                   style={{
@@ -184,7 +208,7 @@ export default function Contatti() {
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  <FaInstagram size={20} />{" "}
+                  <FaInstagram size={20} />
                 </a>
                 {/* Facebook */}
                 <a
@@ -289,8 +313,7 @@ export default function Contatti() {
               </div>
 
               <div className="d-flex justify-content-center justify-content-md-start flex-wrap gap-4">
-                {" "}
-                {/* CONTATTACI */}{" "}
+                {/* CONTATTACI */}
                 <a
                   href="#modulo-contatto"
                   className="btn px-4 py-3 fw-semibold text-uppercase d-flex align-items-center gap-2"
@@ -318,12 +341,11 @@ export default function Contatti() {
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  {" "}
-                  Contattaci <ArrowRight size={19} />{" "}
-                </a>{" "}
-                {/* CHIAMACI */}{" "}
+                  Contattaci <ArrowRight size={19} />
+                </a>
+                {/* CHIAMACI */}
                 <a
-                  href="tel:+ +393403543806"
+                  href="tel:+393403543806"
                   className="btn px-4 py-3 fw-semibold text-uppercase d-flex align-items-center gap-2"
                   style={{
                     backgroundColor: "transparent",
@@ -349,9 +371,8 @@ export default function Contatti() {
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  {" "}
-                  <Phone size={18} /> Chiamaci{" "}
-                </a>{" "}
+                  <Phone size={18} /> Chiamaci
+                </a>
               </div>
             </Col>
           </Row>
@@ -364,10 +385,25 @@ export default function Contatti() {
             {/* TELEFONO */}
             <Col md={6} lg={3}>
               <Card
+                as="a"
+                href="tel:+393403543806"
                 className="h-100 bg-black border-secondary text-light"
                 style={{
                   borderRadius: "4px",
                   transition: "all 0.3s ease",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.borderColor = "#00c853";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(0, 200, 83, 0.18)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 <Card.Body className="p-4">
@@ -381,35 +417,43 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    <Phone size={23} style={{ color: "#00c853" }} />
+                    <Phone size={23} style={{ color: "#00c853" }} />{" "}
                   </div>
-
                   <small
                     className="text-uppercase fw-bold"
-                    style={{
-                      color: "#00c853",
-                      letterSpacing: "2px",
-                    }}
+                    style={{ color: "#00c853", letterSpacing: "2px" }}
                   >
                     Telefono
                   </small>
-
-                  <h5 className="fw-bold mt-2 mb-2">+39 3403543806</h5>
-
+                  <h5 className="fw-bold mt-2 mb-2"> +39 3403543806 </h5>{" "}
                   <p className="text-secondary small mb-0">
                     Parla direttamente con il nostro team.
                   </p>
                 </Card.Body>
               </Card>
             </Col>
-
             {/* EMAIL */}
             <Col md={6} lg={3}>
               <Card
+                as="a"
+                href="mailto:pierocar25@libero.it?subject=Richiesta%20informazioni%20PieroCar&body=Buongiorno,%0A%0Asono%20interessato%20a%20ricevere%20maggiori%20informazioni%20sulle%20vetture%20PieroCar.%0A%0AGrazie."
                 className="h-100 bg-black border-secondary text-light"
                 style={{
                   borderRadius: "4px",
                   transition: "all 0.3s ease",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.borderColor = "#00c853";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(0, 200, 83, 0.18)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 <Card.Body className="p-4">
@@ -440,20 +484,9 @@ export default function Contatti() {
                     className="fw-bold mt-2 mb-2"
                     style={{
                       wordBreak: "break-word",
-                      cursor: "pointer",
-                      transition: "all 0.5s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "scale(2)";
-                      e.currentTarget.style.backgroundColor = "red";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "scale(1)";
-                      e.currentTarget.style.backgroundColor = "transparent";
                     }}
                   >
-                    {" "}
-                    pierocar25@libero.it{" "}
+                    pierocar25@libero.it
                   </h5>
 
                   <p className="text-secondary small mb-0">
@@ -463,17 +496,36 @@ export default function Contatti() {
                 </Card.Body>
               </Card>
             </Col>
-
-            {/* SEDE */}
+            {/* SEDE */}{" "}
             <Col md={6} lg={3}>
+              {" "}
               <Card
+                as="a"
+                href="https://www.google.com/maps/dir/?api=1&destination=37.6548053,12.6072668"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="h-100 bg-black border-secondary text-light"
                 style={{
                   borderRadius: "4px",
                   transition: "all 0.3s ease",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-5px)";
+                  e.currentTarget.style.borderColor = "#00c853";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(0, 200, 83, 0.18)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
+                {" "}
                 <Card.Body className="p-4">
+                  {" "}
                   <div
                     className="d-flex align-items-center justify-content-center mb-4"
                     style={{
@@ -484,28 +536,22 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    <MapPin size={23} style={{ color: "#00c853" }} />
-                  </div>
-
+                    {" "}
+                    <MapPin size={23} style={{ color: "#00c853" }} />{" "}
+                  </div>{" "}
                   <small
                     className="text-uppercase fw-bold"
-                    style={{
-                      color: "#00c853",
-                      letterSpacing: "2px",
-                    }}
+                    style={{ color: "#00c853", letterSpacing: "2px" }}
                   >
                     Showroom
                   </small>
-
-                  <h5 className="fw-bold mt-2 mb-2">PieroCar Showroom</h5>
-
+                  <h5 className="fw-bold mt-2 mb-2"> PieroCar Showroom</h5>
                   <p className="text-secondary small mb-0">
                     Via Val Demone 65/A | 91026 Mazara del Vallo(TP).
                   </p>
                 </Card.Body>
               </Card>
             </Col>
-
             {/* ORARI */}
             <Col md={6} lg={3}>
               <Card
@@ -652,7 +698,7 @@ export default function Contatti() {
               <Card
                 className="bg-black border-secondary shadow-lg contact-form-card"
                 style={{
-                  borderRadius: "2,5em",
+                  borderRadius: "2.5em",
                 }}
               >
                 <Card.Body className="p-4 p-md-5 ">
@@ -699,13 +745,13 @@ export default function Contatti() {
                       <Col md={6}>
                         <Form.Group>
                           <Form.Label className="text-secondary small text-uppercase fw-semibold">
-                            Nome e Cognome
+                            Nome
                           </Form.Label>
                           <Form.Control
                             type="text"
                             name="nome"
                             required
-                            placeholder="Inserisci nome e cognome"
+                            placeholder="Inserisci nome"
                             value={formData.nome}
                             onChange={handleChange}
                             className="bg-dark text-light border-secondary py-2"
@@ -742,24 +788,6 @@ export default function Contatti() {
                             name="telefono"
                             placeholder="+39 ..."
                             value={formData.telefono}
-                            onChange={handleChange}
-                            className="bg-dark text-light border-secondary py-2"
-                          />
-                        </Form.Group>
-                      </Col>
-
-                      {/* VETTURA */}
-                      <Col md={6}>
-                        <Form.Group>
-                          <Form.Label className="text-secondary small text-uppercase fw-semibold">
-                            Vettura di interesse
-                          </Form.Label>
-
-                          <Form.Control
-                            type="text"
-                            name="vettura"
-                            placeholder="Es. BMW M3 Competition"
-                            value={formData.vettura}
                             onChange={handleChange}
                             className="bg-dark text-light border-secondary py-2"
                           />
@@ -827,45 +855,34 @@ export default function Contatti() {
         </Container>
       </section>
       <section className="py-5 border-top border-secondary">
-        {" "}
         <Container className="py-lg-4">
-          {" "}
           <div className="text-center mb-5">
-            {" "}
             <span
               className="text-uppercase fw-bold small"
               style={{ color: "#00c853", letterSpacing: "3px" }}
             >
-              {" "}
-              Il nostro approccio{" "}
-            </span>{" "}
+              Il nostro approccio
+            </span>
             <h2 className="fw-bold text-uppercase display-6 mt-2 mb-3">
-              {" "}
-              Perché scegliere{" "}
-              <span style={{ color: "#00c853" }}> PieroCar </span>{" "}
-            </h2>{" "}
+              Perché scegliere
+              <span style={{ color: "#00c853" }}> PieroCar </span>
+            </h2>
             <p
               className="text-light mx-auto"
               style={{ maxWidth: "700px", lineHeight: "1.8" }}
             >
-              {" "}
               Passione per le automobili, attenzione ai dettagli e un'esperienza
-              pensata per chi cerca qualcosa di più di una semplice
-              vettura.{" "}
-            </p>{" "}
-          </div>{" "}
+              pensata per chi cerca qualcosa di più di una semplice vettura.
+            </p>
+          </div>
           <Row className="g-4">
-            {" "}
-            {/* CARD 1 */}{" "}
+            {/* CARD 1 */}
             <Col md={6} lg={3}>
-              {" "}
               <Card
                 className="h-100 bg-black border-secondary text-light"
                 style={{ borderRadius: "4px" }}
               >
-                {" "}
                 <Card.Body className="p-4 text-center">
-                  {" "}
                   <div
                     className="mx-auto mb-4 d-flex align-items-center justify-content-center"
                     style={{
@@ -876,32 +893,26 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    {" "}
-                    <Car size={28} style={{ color: "#00c853" }} />{" "}
-                  </div>{" "}
+                    <Car size={28} style={{ color: "#00c853" }} />
+                  </div>
                   <h5 className="fw-bold text-uppercase mb-3">
-                    {" "}
-                    Vetture selezionate{" "}
-                  </h5>{" "}
+                    Vetture selezionate
+                  </h5>
                   <p className="text-secondary small mb-0">
-                    {" "}
                     Una selezione di automobili scelta con attenzione, pensata
                     per appassionati e clienti alla ricerca di qualcosa di
-                    speciale.{" "}
-                  </p>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
-            </Col>{" "}
-            {/* CARD 2 */}{" "}
+                    speciale.
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            {/* CARD 2 */}
             <Col md={6} lg={3}>
-              {" "}
               <Card
                 className="h-100 bg-black border-secondary text-light"
                 style={{ borderRadius: "4px" }}
               >
-                {" "}
                 <Card.Body className="p-4 text-center">
-                  {" "}
                   <div
                     className="mx-auto mb-4 d-flex align-items-center justify-content-center"
                     style={{
@@ -912,29 +923,24 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    {" "}
-                    <Award size={28} style={{ color: "#00c853" }} />{" "}
-                  </div>{" "}
-                  <h5 className="fw-bold text-uppercase mb-3"> Qualità </h5>{" "}
+                    <Award size={28} style={{ color: "#00c853" }} />
+                  </div>
+                  <h5 className="fw-bold text-uppercase mb-3"> Qualità </h5>
                   <p className="text-secondary small mb-0">
-                    {" "}
                     Prestiamo particolare attenzione alle caratteristiche, alle
                     condizioni e alla presentazione di ogni vettura presente
-                    nella nostra vetrina.{" "}
-                  </p>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
-            </Col>{" "}
-            {/* CARD 3 */}{" "}
+                    nella nostra vetrina.
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            {/* CARD 3 */}
             <Col md={6} lg={3}>
-              {" "}
               <Card
                 className="h-100 bg-black border-secondary text-light"
                 style={{ borderRadius: "4px" }}
               >
-                {" "}
                 <Card.Body className="p-4 text-center">
-                  {" "}
                   <div
                     className="mx-auto mb-4 d-flex align-items-center justify-content-center"
                     style={{
@@ -945,32 +951,26 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    {" "}
-                    <Users size={28} style={{ color: "#00c853" }} />{" "}
-                  </div>{" "}
+                    <Users size={28} style={{ color: "#00c853" }} />
+                  </div>
                   <h5 className="fw-bold text-uppercase mb-3">
-                    {" "}
-                    Servizio personale{" "}
-                  </h5>{" "}
+                    Servizio personale
+                  </h5>
                   <p className="text-secondary small mb-0">
-                    {" "}
                     Ogni cliente viene seguito in modo diretto, con
                     disponibilità e attenzione durante ogni fase della
-                    richiesta.{" "}
-                  </p>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
-            </Col>{" "}
-            {/* CARD 4 */}{" "}
+                    richiesta.
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+            {/* CARD 4 */}
             <Col md={6} lg={3}>
-              {" "}
               <Card
                 className="h-100 bg-black border-secondary text-light"
                 style={{ borderRadius: "4px" }}
               >
-                {" "}
                 <Card.Body className="p-4 text-center">
-                  {" "}
                   <div
                     className="mx-auto mb-4 d-flex align-items-center justify-content-center"
                     style={{
@@ -981,67 +981,53 @@ export default function Contatti() {
                       border: "1px solid rgba(0,200,83,0.35)",
                     }}
                   >
-                    {" "}
-                    <ShieldCheck size={28} style={{ color: "#00c853" }} />{" "}
-                  </div>{" "}
-                  <h5 className="fw-bold text-uppercase mb-3">
-                    {" "}
-                    Affidabilità{" "}
-                  </h5>{" "}
+                    <ShieldCheck size={28} style={{ color: "#00c853" }} />
+                  </div>
+                  <h5 className="fw-bold text-uppercase mb-3">Affidabilità</h5>
                   <p className="text-secondary small mb-0">
-                    {" "}
                     Informazioni chiare e un rapporto trasparente sono alla base
-                    del nostro modo di presentarci ai clienti.{" "}
-                  </p>{" "}
-                </Card.Body>{" "}
-              </Card>{" "}
-            </Col>{" "}
-          </Row>{" "}
-        </Container>{" "}
-      </section>{" "}
+                    del nostro modo di presentarci ai clienti.
+                  </p>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </section>
       {/* ========================================= */}
-      {/* NUMERI / PRESENTAZIONE */}{" "}
+      {/* NUMERI / PRESENTAZIONE */}
       {/* ========================================= */}
       <section
         className="py-5 border-top border-secondary"
         style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
       >
-        {" "}
         <Container>
-          {" "}
           <Row className="align-items-center g-5">
-            {" "}
             <Col lg={6}>
-              {" "}
               <span
                 className="text-uppercase fw-bold small"
                 style={{ color: "#00c853", letterSpacing: "3px" }}
               >
-                {" "}
-                PieroCar Showroom{" "}
-              </span>{" "}
+                PieroCar Showroom
+              </span>
               <h2 className="fw-bold text-uppercase display-6 mt-2 mb-4">
-                {" "}
-                Una vetrina. <br />{" "}
-                <span style={{ color: "#00c853" }}> Una passione. </span>{" "}
-              </h2>{" "}
+                Una vetrina. <br />
+                <span style={{ color: "#00c853" }}> Una passione. </span>
+              </h2>
               <p
                 className="text-light"
                 style={{ lineHeight: "1.9", opacity: "0.78" }}
               >
-                {" "}
                 PieroCar nasce dalla passione per il mondo dell'automobile e
                 dalla volontà di creare uno spazio digitale dedicato a vetture
-                capaci di distinguersi.{" "}
-              </p>{" "}
+                capaci di distinguersi.
+              </p>
               <p className="text-secondary" style={{ lineHeight: "1.9" }}>
-                {" "}
                 Esplora la nostra vetrina, scopri i dettagli delle vetture e
                 contattaci per ricevere maggiori informazioni sul modello che ha
-                attirato la tua attenzione.{" "}
-              </p>{" "}
+                attirato la tua attenzione.
+              </p>
               <div className="mt-4">
-                {" "}
                 <Link
                   to="/"
                   className="btn px-4 py-3 fw-semibold text-uppercase d-flex align-items-center gap-2"
@@ -1075,124 +1061,87 @@ export default function Contatti() {
             </Col>
             <Col lg={6}>
               <Row className="g-3">
-                {" "}
-                {/* BLOCCO 1 */}{" "}
+                {/* BLOCCO 1 */}
                 <Col xs={6}>
-                  {" "}
                   <div
                     className="bg-black border border-secondary p-4 h-100 text-center"
                     style={{ minHeight: "150px" }}
                   >
-                    {" "}
                     <div
                       className=" display-5 fw-light"
                       style={{ color: "#00c853" }}
                     >
                       1°
                     </div>
-                    <div className="text-uppercase fw-bold mt-2">
-                      {" "}
-                      Passione{" "}
-                    </div>{" "}
-                    <small className="text-secondary">
-                      {" "}
-                      per l'automobile{" "}
-                    </small>{" "}
-                  </div>{" "}
-                </Col>{" "}
-                {/* BLOCCO 2 */}{" "}
+                    <div className="text-uppercase fw-bold mt-2">Passione</div>
+                    <small className="text-secondary">per l'automobile</small>
+                  </div>
+                </Col>
+                {/* BLOCCO 2 */}
                 <Col xs={6}>
-                  {" "}
                   <div
                     className="bg-black border border-secondary p-4 h-100 text-center"
                     style={{ minHeight: "150px" }}
                   >
-                    {" "}
                     <div
                       className=" display-5 fw-light"
                       style={{ color: "#00c853" }}
                     >
-                      {" "}
-                      2°{" "}
-                    </div>{" "}
-                    <div className="text-uppercase fw-bold mt-2">
-                      {" "}
-                      Qualità{" "}
-                    </div>{" "}
-                    <small className="text-secondary">
-                      {" "}
-                      nella selezione{" "}
-                    </small>{" "}
-                  </div>{" "}
-                </Col>{" "}
-                {/* BLOCCO 3 */}{" "}
+                      2°
+                    </div>
+                    <div className="text-uppercase fw-bold mt-2">Qualità</div>
+                    <small className="text-secondary">nella selezione</small>
+                  </div>
+                </Col>
+                {/* BLOCCO 3 */}
                 <Col xs={6}>
-                  {" "}
                   <div
                     className="bg-black border border-secondary p-4 h-100 text-center"
                     style={{ minHeight: "150px" }}
                   >
-                    {" "}
                     <div
                       className="display-5 fw-light"
                       style={{ color: "#00c853" }}
                     >
-                      {" "}
-                      3°{" "}
-                    </div>{" "}
+                      3°
+                    </div>
                     <div className="text-uppercase fw-bold mt-2">
-                      {" "}
-                      Attenzione{" "}
-                    </div>{" "}
-                    <small className="text-secondary">
-                      {" "}
-                      per ogni cliente{" "}
-                    </small>{" "}
-                  </div>{" "}
-                </Col>{" "}
-                {/* BLOCCO 4 */}{" "}
+                      Attenzione
+                    </div>
+                    <small className="text-secondary">per ogni cliente</small>
+                  </div>
+                </Col>
+                {/* BLOCCO 4 */}
                 <Col xs={6}>
-                  {" "}
                   <div
                     className="bg-black border border-secondary p-4 px-3 h-100 text-center"
                     style={{ minHeight: "150px" }}
                   >
-                    {" "}
                     <div
                       className="display-5 fw-light"
                       style={{ color: "#00c853" }}
                     >
-                      {" "}
-                      4°{" "}
-                    </div>{" "}
+                      4°
+                    </div>
                     <div className="text-uppercase fw-bold mt-2">
-                      {" "}
                       Professione
-                    </div>{" "}
-                    <small className="text-secondary">
-                      {" "}
-                      nel servizio{" "}
-                    </small>{" "}
-                  </div>{" "}
-                </Col>{" "}
-              </Row>{" "}
-            </Col>{" "}
-          </Row>{" "}
-        </Container>{" "}
-      </section>{" "}
-      {/* ========================================= */}{" "}
-      {/* CALL TO ACTION FINALE */}{" "}
-      {/* ========================================= */}{" "}
+                    </div>
+                    <small className="text-secondary">nel servizio</small>
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+      {/* CALL TO ACTION FINALE */}
       <section className="py-5 border-top border-secondary">
-        {" "}
         <Container>
-          {" "}
           <div
             className="position-relative overflow-hidden bg-black border border-secondary p-4 p-md-5 text-center"
             style={{ borderRadius: "4px" }}
           >
-            {" "}
-            {/* Bagliore verde */}{" "}
+            {/* Bagliore verde */}
             <div
               className="position-absolute top-50 start-50 translate-middle"
               style={{
@@ -1203,23 +1152,20 @@ export default function Contatti() {
                   "radial-gradient(circle, rgba(0,200,83,0.10) 0%, rgba(0,200,83,0) 70%)",
                 pointerEvents: "none",
               }}
-            />{" "}
+            />
             <div className="position-relative">
-              {" "}
               <img
                 src={LogoCogna}
                 alt="PieroCar"
                 style={{ width: "120px", marginBottom: "25px" }}
-              />{" "}
+              />
               <h2 className="fw-bold text-uppercase mb-3">
-                {" "}
                 Hai trovato la tua prossima auto?
-              </h2>{" "}
+              </h2>
               <p
                 className="text-secondary mx-auto"
                 style={{ maxWidth: "650px", lineHeight: "1.8" }}
               >
-                {" "}
                 Non esitare a contattarci. Siamo a disposizione per fornirti
                 maggiori informazioni sulle vetture presenti nella nostra
                 vetrina.
@@ -1236,18 +1182,16 @@ export default function Contatti() {
                   className="text-secondary text-uppercase small fw-semibold mb-2"
                   style={{ letterSpacing: "2px" }}
                 >
-                  Per informazioni scrivici a{" "}
+                  Per informazioni scrivici a
                 </span>
                 <h5
                   className="fw-bold mt-2 mb-2"
                   style={{ wordBreak: "break-word" }}
                 >
-                  {" "}
                   <a
                     href="mailto:pierocar25@libero.it?subject=Richiesta%20informazioni%20PieroCar&body=Buongiorno,%0A%0Asono%20interessato%20a%20ricevere%20maggiori%20informazioni%20sulle%20vetture%20PieroCar.%0A%0AGrazie."
                     style={{ color: "inherit", textDecoration: "none" }}
                   >
-                    {" "}
                     <span
                       style={{
                         display: "inline-block",
@@ -1266,10 +1210,9 @@ export default function Contatti() {
                         e.currentTarget.style.textShadow = "";
                       }}
                     >
-                      {" "}
-                      pierocar25@libero.it{" "}
-                    </span>{" "}
-                  </a>{" "}
+                      pierocar25@libero.it
+                    </span>
+                  </a>
                 </h5>
               </div>
             </div>
